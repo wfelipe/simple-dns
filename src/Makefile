@@ -1,17 +1,20 @@
 CC = gcc
 CFLAGS = -g -O0
-headers = dns.h
-objects = dns.o main.o
+headers = server.h
+objects = server.o simple-dns.o test.o
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
-all: simple-dns
+all: simple-dns test
 
-simple-dns: $(objects)
-	$(CC) $(CFLAGS) -o simple-dns $(objects)
+simple-dns: server.o simple-dns.o
+	$(CC) $(CFLAGS) -o simple-dns server.o simple-dns.o
+
+test: server.o test.o
+	$(CC) $(CFLAGS) -o test server.o test.o
 
 $(objects): $(headers)
 
 clean:
-	rm -f $(objects)
+	rm -f $(objects) simple-dns test

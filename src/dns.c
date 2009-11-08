@@ -1,3 +1,0 @@
-void dns_init ()
-{
-}
