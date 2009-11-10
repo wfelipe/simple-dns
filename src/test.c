@@ -5,7 +5,7 @@ int main (int argc, char **argv)
 {
 	int ret;
 
-	ret = open_socket ();
+	open_sockets ();
 	printf ("open_socket: %d\n", ret);
 	sleep (10);
 }
