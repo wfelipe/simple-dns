@@ -13,7 +13,7 @@ struct dns_config
 struct dns_server
 {
 	struct dns_config config;
-	int listen_sock;
+	int listenfd;
 };
 
 extern struct dns_server dns_server;

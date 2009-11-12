@@ -26,7 +26,7 @@ void dns_init (void)
 	dns_server.config.port = 53;
 	dns_server.config.host = INADDR_ANY;
 
-	dns_server.listen_sock = 0;
+	dns_server.listenfd = 0;
 }
 
 /*
@@ -45,8 +45,10 @@ void open_sockets (void)
 	memset ((char *) &si_me, 0, sizeof (si_me));
 	si_me.sin_family = AF_INET;
 	si_me.sin_port = htons (dns_server.config.port);
-	si_me.sin_addr.s_addr = htonl (INADDR_ANY);
-	assert (bind (sd, &si_me, sizeof (si_me)) == 0);
+	si_me.sin_addr.s_addr = inet_addr (dns_server.config.host);
+	assert (bind (sd, (struct sockaddr *) &si_me, sizeof (si_me)) == 0);
+
+	dns_server.listenfd = sd; 
 }
 
 /*
@@ -66,5 +68,14 @@ void dns_start (void)
  */
 void dns_loop (void)
 {
+	int client;
+	socklen_t addrlen;
+	struct sockaddr_in addr;
+	char buffer[1024];
+
 	printf ("Accepting connections...\n");
+	for (;;)
+	{
+		client = recvfrom (dns_server.listenfd, buffer, sizeof (buffer), 0, (struct sockaddr *) &addr, &addrlen);
+	}
 }
