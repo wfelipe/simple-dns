@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <syslog.h>
 
+#include "dns_protocol.h"
 #include "server.h"
 
 struct dns_server dns_server;
@@ -34,7 +35,7 @@ void dns_init (void)
  */
 void open_sockets (void)
 {
-	struct sockaddr_in si_me, si_other;
+	struct sockaddr_in si_me;
 	int sd;
 	char buf[255];
 
@@ -72,10 +73,12 @@ void dns_loop (void)
 	socklen_t addrlen;
 	struct sockaddr_in addr;
 	char buffer[1024];
+	struct dns_packet *req;
 
 	printf ("Accepting connections...\n");
 	for (;;)
 	{
-		client = recvfrom (dns_server.listenfd, buffer, sizeof (buffer), 0, (struct sockaddr *) &addr, &addrlen);
+		client = recvfrom (dns_server.listenfd, buffer, 1024, 0, (struct sockaddr *) &addr, &addrlen);
+		req = parse_request (buffer, sizeof (buffer));
 	}
 }

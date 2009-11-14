@@ -1,9 +1,5 @@
-/*
- * Implementation of RFC 1035
- * DOMAIN NAMES - IMPLEMENTATION AND SPECIFICATION
- * http://www.ietf.org/rfc/rfc1034.txt
- * http://www.ietf.org/rfc/rfc1035.txt
- */
+#ifndef __DNS_PROTOCOL_H__
+#define __DNS_PROTOCOL_H__
 
 /* QR
  * a one bit field that specifies whether this message is a query
@@ -30,18 +26,20 @@
 
 struct dns_packet
 {
-		u16 id; /* a 16 bit identifier assigned by the client */
-		u16 attr; /* a 16 bit, identifying:
-					 qr (1)
-					 opcode (4)
-					 aa (1)
-					 tc (1)
-					 rd (1)
-					 ra (1)
-					 z (3)
-					 rcode (4) */
-		u16 qdcount;
-		u16 ancount;
-		u16 nscount;
-		u16 arcount;
+	uint16_t id; /* a 16 bit identifier assigned by the client */
+	uint16_t attr; /* a 16 bit, identifying:
+				qr (1)
+				opcode (4)
+				aa (1)
+				tc (1)
+				rd (1)
+				ra (1)
+				z (3)
+				rcode (4) */
+	unsigned short qdcount;
+	unsigned short ancount;
+	unsigned short nscount;
+	unsigned short arcount;
 };
+
+#endif
