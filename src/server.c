@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <syslog.h>
 #include <errno.h>
+#include <fcntl.h>
 
 #include "dns_protocol.h"
 #include "server.h"
@@ -36,18 +37,19 @@ void dns_init (void)
  */
 void open_sockets (void)
 {
-	struct sockaddr_in si_me;
+	struct sockaddr_in sin;
 	int sd;
 
 	printf ("Opening sockets.\n");
 
-	assert ((sd = socket (AF_INET, SOCK_DGRAM, IPPROTO_UDP)) > 0);
+	/* TODO - O_CLOEXEC and O_NONBLOCK */
+	assert ((sd = socket (AF_INET, SOCK_DGRAM, 0)) > 0);
 
-	memset ((char *) &si_me, 0, sizeof (si_me));
-	si_me.sin_family = AF_INET;
-	si_me.sin_port = htons (dns_server.config.port);
-	si_me.sin_addr.s_addr = inet_addr (dns_server.config.host);
-	assert (bind (sd, (struct sockaddr *) &si_me, sizeof (si_me)) == 0);
+	memset ((char *) &sin, 0, sizeof (sin));
+	sin.sin_family = AF_INET;
+	sin.sin_port = htons (dns_server.config.port);
+	sin.sin_addr.s_addr = inet_addr (dns_server.config.host);
+	assert (bind (sd, (struct sockaddr *) &sin, sizeof (sin)) == 0);
 
 	dns_server.listenfd = sd; 
 }
