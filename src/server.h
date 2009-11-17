@@ -1,6 +1,8 @@
 #ifndef __SERVER_H__
 #define __SERVER_H__
 
+#define PACKET_SIZE 512
+
 struct dns_config
 {
 	char *config_file;

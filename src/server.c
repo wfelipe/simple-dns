@@ -70,16 +70,18 @@ void dns_start (void)
 void dns_loop (void)
 {
 	int client;
-	socklen_t addrlen;
-	struct sockaddr_in addr;
-	char buffer[1024];
+	struct sockaddr_in from;
+	socklen_t from_len;
+	char buf[PACKET_SIZE+4];
 	struct dns_packet *req;
+
+	from_len = sizeof (from);
 
 	printf ("Accepting connections...\n");
 	for (;;)
 	{
-		client = recvfrom (dns_server.listenfd, buffer, 1023, 0, (struct sockaddr *) &addr, &addrlen);
+		client = recvfrom (dns_server.listenfd, buf, PACKET_SIZE + 4, 0, (struct sockaddr *) &from, &from_len);
 		printf ("client: %d %s\n", client, strerror (errno));
-		req = parse_request (buffer, 1024);
+		req = parse_request (buf, PACKET_SIZE + 4);
 	}
 }
