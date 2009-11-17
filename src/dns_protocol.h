@@ -42,4 +42,6 @@ struct dns_packet
 	unsigned short arcount;
 };
 
+struct dns_packet *parse_request (void *packet, int size);
+
 #endif

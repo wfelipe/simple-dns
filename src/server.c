@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <syslog.h>
+#include <errno.h>
 
 #include "dns_protocol.h"
 #include "server.h"
@@ -25,7 +26,7 @@ void dns_init (void)
 	dns_server.config.fg = 0;
 
 	dns_server.config.port = 53;
-	dns_server.config.host = INADDR_ANY;
+	dns_server.config.host = "0.0.0.0";
 
 	dns_server.listenfd = 0;
 }
@@ -37,7 +38,6 @@ void open_sockets (void)
 {
 	struct sockaddr_in si_me;
 	int sd;
-	char buf[255];
 
 	printf ("Opening sockets.\n");
 
@@ -78,7 +78,8 @@ void dns_loop (void)
 	printf ("Accepting connections...\n");
 	for (;;)
 	{
-		client = recvfrom (dns_server.listenfd, buffer, 1024, 0, (struct sockaddr *) &addr, &addrlen);
-		req = parse_request (buffer, sizeof (buffer));
+		client = recvfrom (dns_server.listenfd, buffer, 1023, 0, (struct sockaddr *) &addr, &addrlen);
+		printf ("client: %d %s\n", client, strerror (errno));
+		req = parse_request (buffer, 1024);
 	}
 }
