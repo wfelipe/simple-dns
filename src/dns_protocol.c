@@ -12,20 +12,19 @@
 
 #include "dns_protocol.h"
 
-int dns_parse_request (struct dns_packet *req, char *packet, int size)
+void dns_print_header (struct dns_header *header)
 {
-	//printf ("%s\n", packet);
-	req = (struct dns_packet *) packet;
-
-	return 0;
+	printf ("ID: %d\n", header->id);
+	printf ("attr: %d\n", header->attr);
+	printf ("qdcount: %d\n", header->qdcount);
+	printf ("ancount: %d\n", header->ancount);
+	printf ("nscount: %d\n", header->nscount);
+	printf ("arcount: %d\n", header->arcount);
 }
 
 void dns_print_packet (struct dns_packet *packet)
 {
-	printf ("ID: %d\n", packet->id);
-	printf ("attr: %d\n", packet->attr);
-	printf ("qdcount: %d\n", packet->qdcount);
-	printf ("ancount: %d\n", packet->ancount);
-	printf ("nscount: %d\n", packet->nscount);
-	printf ("arcount: %d\n", packet->arcount);
+	dns_print_header (&packet->header);
+	printf ("data_size: %d\n", packet->data_size);
+//	printf ("data: %d\n", packet->data);
 }

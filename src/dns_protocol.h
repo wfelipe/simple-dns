@@ -44,7 +44,15 @@ struct dns_header
 	u_int16_t arcount;
 };
 
-int dns_parse_request (struct dns_header *req, char *packet, int size);
-void dns_print_packet (struct dns_header *packet);
+
+struct dns_packet
+{
+	struct dns_header header;
+	char *data;
+	u_int16_t data_size;
+};
+
+void dns_print_header (struct dns_header *header);
+void dns_print_packet (struct dns_packet *packet);
 
 #endif
