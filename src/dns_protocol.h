@@ -1,6 +1,8 @@
 #ifndef __DNS_PROTOCOL_H__
 #define __DNS_PROTOCOL_H__
 
+#include <sys/types.h>
+
 /* QR
  * a one bit field that specifies whether this message is a query
  * or a response
@@ -24,10 +26,10 @@
 #define AA_NONAUTHORITY 0
 #define AA_AUTHORITY 1
 
-struct dns_packet
+struct dns_header
 {
-	uint16_t id; /* a 16 bit identifier assigned by the client */
-	uint16_t attr; /* a 16 bit, identifying:
+	u_int16_t id; /* a 16 bit identifier assigned by the client */
+	u_int16_t attr; /* a 16 bit, identifying:
 				qr (1)
 				opcode (4)
 				aa (1)
@@ -36,12 +38,13 @@ struct dns_packet
 				ra (1)
 				z (3)
 				rcode (4) */
-	unsigned short qdcount;
-	unsigned short ancount;
-	unsigned short nscount;
-	unsigned short arcount;
+	u_int16_t qdcount;
+	u_int16_t ancount;
+	u_int16_t nscount;
+	u_int16_t arcount;
 };
 
-struct dns_packet *parse_request (void *packet, int size);
+int dns_parse_request (struct dns_header *req, char *packet, int size);
+void dns_print_packet (struct dns_header *packet);
 
 #endif

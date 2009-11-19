@@ -6,16 +6,26 @@
  */
 
 #include <stdlib.h>
-#include <stdint.h>
+#include <stdio.h>
 #include <assert.h>
+#include <errno.h>
 
 #include "dns_protocol.h"
 
-struct dns_packet *parse_request (void *packet, int size)
+int dns_parse_request (struct dns_packet *req, char *packet, int size)
 {
-	struct dns_packet *req;
+	//printf ("%s\n", packet);
+	req = (struct dns_packet *) packet;
 
-	assert (req = malloc (sizeof (struct dns_packet *)));
+	return 0;
+}
 
-	return req;
+void dns_print_packet (struct dns_packet *packet)
+{
+	printf ("ID: %d\n", packet->id);
+	printf ("attr: %d\n", packet->attr);
+	printf ("qdcount: %d\n", packet->qdcount);
+	printf ("ancount: %d\n", packet->ancount);
+	printf ("nscount: %d\n", packet->nscount);
+	printf ("arcount: %d\n", packet->arcount);
 }
