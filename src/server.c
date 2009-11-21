@@ -85,9 +85,10 @@ void dns_loop (void)
 		req_size = recvfrom (dns_server.listenfd, buf, PACKET_SIZE + 4, 0, (struct sockaddr *) &from, &from_len);
 		printf ("client: %s %d\n", strerror (errno), req_size);
 
-		pkt = malloc (sizeof (struct dns_packet *));
+		pkt = malloc (sizeof (struct dns_packet));
+		pkt->data = malloc (req_size);
+
 		memcpy (&pkt->header, buf, 12);
-		pkt->data = malloc (req_size - 12);
 		memcpy (pkt->data, buf + 12, req_size - 12);
 		pkt->data_size = req_size - 12;
 

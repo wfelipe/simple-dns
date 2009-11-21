@@ -26,5 +26,5 @@ void dns_print_packet (struct dns_packet *packet)
 {
 	dns_print_header (&packet->header);
 	printf ("data_size: %d\n", packet->data_size);
-//	printf ("data: %d\n", packet->data);
+	printf ("data: %s\n", packet->data);
 }
