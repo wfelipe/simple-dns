@@ -2,3 +2,5 @@
 *.swp
 simple-dns
 test
+client
+*~
