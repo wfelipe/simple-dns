@@ -55,4 +55,7 @@ struct dns_packet
 void dns_print_header (struct dns_header *header);
 void dns_print_packet (struct dns_packet *packet);
 
+int dns_packet_parse (struct dns_packet *pkt, void *data, u_int16_t size);
+int dns_header_parse (struct dns_header *header, void *data);
+
 #endif
