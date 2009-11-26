@@ -48,14 +48,33 @@ struct dns_header
 struct dns_packet
 {
 	struct dns_header header;
+//	struct dns_question question;
 	char *data;
 	u_int16_t data_size;
+};
+
+struct dns_response_packet
+{
+	char *name;
+	u_int16_t type;
+	u_int16_t class;
+	u_int32_t ttl;
+	u_int16_t rdlength;
+	char *rdata;
+};
+
+struct dns_question
+{
+	char *qname;
+	u_int16_t qtype;
+	u_int16_t qclass;
 };
 
 void dns_print_header (struct dns_header *header);
 void dns_print_packet (struct dns_packet *packet);
 
-int dns_packet_parse (struct dns_packet *pkt, void *data, u_int16_t size);
+int dns_request_parse (struct dns_packet *pkt, void *data, u_int16_t size);
 int dns_header_parse (struct dns_header *header, void *data);
+int dns_question_parse (struct dns_packet *pkt);
 
 #endif

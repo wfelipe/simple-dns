@@ -86,7 +86,7 @@ void dns_loop (void)
 		printf ("client: %s %d\n", strerror (errno), req_size);
 
 		pkt = calloc (1, sizeof (struct dns_packet));
-		dns_packet_parse (pkt, buf, req_size);
+		dns_request_parse (pkt, buf, req_size);
 
 		dns_print_packet (pkt);
 
