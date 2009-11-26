@@ -20,4 +20,4 @@ test: server.o test.o dns_protocol.o
 $(objects): $(headers)
 
 clean:
-	rm -f $(objects) simple-dns test
+	rm -f $(objects) simple-dns test client
