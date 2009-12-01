@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -g -O0 -Wall
-headers = server.h dns_protocol.h
+headers = server.h dns_protocol.h list.h
 objects = server.o simple-dns.o test.o dns_protocol.o client.o
 
 .c.o:
@@ -8,7 +8,7 @@ objects = server.o simple-dns.o test.o dns_protocol.o client.o
 
 all: simple-dns client
 
-simple-dns: server.o simple-dns.o dns_protocol.o
+simple-dns: server.o simple-dns.o dns_protocol.o list.h
 	$(CC) $(CFLAGS) -o simple-dns server.o simple-dns.o dns_protocol.o
 
 client: dns_protocol.o client.o
