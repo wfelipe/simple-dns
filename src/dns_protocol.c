@@ -18,16 +18,14 @@
 void dns_print_header (struct dns_header *header)
 {
 	printf ("ID: %d\n", header->id);
-	printf ("attr: %d\n", header->attr);
-
-	printf ("\tqr: %d\n", (header->attr >> 15) & 0x01);
-	printf ("\topcode: %d\n", (header->attr >> 14) & 0x0f);
-	printf ("\taa: %d\n", (header->attr >> 10) & 0x01);
-	printf ("\ttc: %d\n", (header->attr >> 9) & 0x01);
-	printf ("\trd: %d\n", (header->attr >> 8) & 0x01);
-	printf ("\tra: %d\n", (header->attr >> 7) & 0x01);
-	printf ("\tz: %d\n", (header->attr >> 4) & 0x07);
-	printf ("\trcode: %d\n", (header->attr >> 3) & 0x01);
+	printf ("qr: %d\n", header->qr);
+	printf ("opcode: %d\n", header->opcode);
+	printf ("aa: %d\n", header->aa);
+	printf ("tc: %d\n", header->tc);
+	printf ("rd: %d\n", header->rd);
+	printf ("ra: %d\n", header->ra);
+	printf ("z: %d\n", header->z);
+	printf ("rcode: %d\n", header->rcode);
 
 	printf ("qdcount: %d\n", header->qdcount);
 	printf ("ancount: %d\n", header->ancount);
@@ -67,7 +65,6 @@ int dns_header_parse (struct dns_header *header, void *data)
 	memcpy (header, data, 12);
 
 	header->id = ntohs (header->id);
-	header->attr = ntohs (header->attr);
 	header->qdcount = ntohs (header->qdcount);
 	header->ancount = ntohs (header->ancount);
 	header->nscount = ntohs (header->nscount);
