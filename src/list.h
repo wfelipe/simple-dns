@@ -29,5 +29,10 @@ static inline void __list_add (struct list *new,
 static inline void list_add (struct list *new,
 			     struct list *l)
 {
-	__list_add (new, head, head->next);
+	__list_add (new, l, l->next);
+}
+
+static inline void list_add_tail (struct list *new, struct list *l)
+{
+	__list_add (new, l->prev, l);
 }
